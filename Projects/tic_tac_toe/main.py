@@ -1,7 +1,7 @@
 import time
 
 def reset(board):
-    
+
     board = [[1,2,3],[4,5,6],[7,8,9]]
     return board
 
@@ -76,13 +76,29 @@ def checkGameOver(board):
     return flag
 
 def checkGameWon(board):
-    return 0
+    flag = 0
+
+    result = [[board[0][0], board[0][1], board[0][2]],
+              [board[1][0], board[1][1], board[1][2]],
+              [board[2][0], board[2][1], board[2][2]],
+              [board[0][0], board[1][0], board[2][0]],
+              [board[0][1], board[1][1], board[2][1]],
+              [board[0][2], board[1][2], board[2][2]],
+              [board[0][0], board[1][1], board[2][2]],
+              [board[0][2], board[1][1], board[2][0]]]
+    
+    for i in result:
+        if i[0] == i[1] and i[1] == i[2]:
+            flag = 1
+            break
+    return flag
 
 
 def game(board):
 
+    global x_cnt, o_cnt
+
     while True:
-        print("\n")
 
         board = placeX(board)
         display(board)
@@ -92,8 +108,10 @@ def game(board):
         if game_over or game_won:
             if game_won:
                 print("\nX won the game\n")
+                x_cnt += 1
+            else:
+                print("\nTIE\n")
             break
-        print("\n")
 
         board = placeO(board)
         display(board)
@@ -103,7 +121,11 @@ def game(board):
         if game_over or game_won:
             if game_won:
                 print("\nO won the game\n")
+                o_cnt += 1
+            else:
+                print("\nTIE\n")
             break
+    return board
 
                 
 
@@ -112,19 +134,30 @@ time.sleep(1)
 
 board = [[1,2,3],[4,5,6],[7,8,9]]
 
+x_cnt = 0
+o_cnt = 0
+
 print("Player 1 : X\nPlayer 2 : O\n")
 display(board)
 
 
 while True:
 
-    game(board)
+    board = game(board)
 
     ch = input("Do you want to play again? (y/n) : ")
     if ch.lower() == 'y':
         board = reset(board)
         display(board)
     else:
+        print("\nFinal Score : \n")
+        print(f"\nX: {x_cnt}\nO: {o_cnt}")
+        if x_cnt > o_cnt:
+            print("\nX won the game\n")
+        elif o_cnt > x_cnt:
+            print("\nO won the game\n")
+        else:
+            print("\nTIE\n")
         print("\nExiting...\n")
         break
 
