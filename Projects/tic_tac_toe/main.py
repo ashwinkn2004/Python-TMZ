@@ -1,6 +1,6 @@
 import time
 
-def reset(board):
+def reset():
 
     board = [[1,2,3],[4,5,6],[7,8,9]]
     return board
@@ -18,50 +18,26 @@ def display(board):
 def placeX(board):
     inp = int(input("Enter the number to place x : "))
 
-    flag = 0
-
     for i in range(3):
         for j in range(3):
             if board[i][j] == inp:
-                flag = 1
-                break
+                board[i][j] = "X"
+                return board
 
-    if flag == 0:
-        print("\nAlready filled, try again\n")
-        placeX(board)
-
-    else:
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == inp:
-                    board[i][j] = "X"
-                    break
-
-    return board
+    print("\nAlready filled, try again\n")
+    return placeX(board)
 
 def placeO(board):
-
     inp = int(input("Enter the number to place o : "))
-
-    flag = 0
 
     for i in range(3):
         for j in range(3):
             if board[i][j] == inp:
-                flag = 1
-                break
+                board[i][j] = "O"
+                return board
 
-    if flag == 0:
-        print("\nAlready filled, try again\n")
-        placeO(board)
-
-    else:
-        for i in range(3):
-            for j in range(3):
-                if board[i][j] == inp:
-                    board[i][j] = "O"
-                    break
-    return board
+    print("\nAlready filled, try again\n")
+    return placeO(board)
 
 def checkGameOver(board):
     flag = 1
@@ -147,7 +123,7 @@ while True:
 
     ch = input("Do you want to play again? (y/n) : ")
     if ch.lower() == 'y':
-        board = reset(board)
+        board = reset()
         display(board)
     else:
         print("\nFinal Score : \n")
