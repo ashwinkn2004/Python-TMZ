@@ -5,6 +5,7 @@ def reset():
     board = [[1,2,3],[4,5,6],[7,8,9]]
     return board
 
+
 def display(board):
     
     print("\n")
@@ -14,6 +15,7 @@ def display(board):
             print(board[i][j], end = " | ")
         print()
     print("\n")
+
 
 def placeX(board):
     inp = int(input("Enter the number to place x : "))
@@ -27,6 +29,7 @@ def placeX(board):
     print("\nAlready filled, try again\n")
     return placeX(board)
 
+
 def placeO(board):
     inp = int(input("Enter the number to place o : "))
 
@@ -39,6 +42,7 @@ def placeO(board):
     print("\nAlready filled, try again\n")
     return placeO(board)
 
+
 def checkGameOver(board):
     flag = 1
     temp = [1,2,3,4,5,6,7,8,9]
@@ -50,6 +54,7 @@ def checkGameOver(board):
                 break
 
     return flag
+
 
 def checkGameWon(board):
     flag = 0
@@ -104,7 +109,6 @@ def game(board):
     return board
 
                 
-
 print("\nWelcome to Tic Tac Toe\n")
 time.sleep(1)
 
@@ -136,5 +140,4 @@ while True:
             print("\nTIE\n")
         print("\nExiting...\n")
         break
-
-
+    
