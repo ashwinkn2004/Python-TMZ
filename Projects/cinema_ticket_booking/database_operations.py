@@ -2,7 +2,7 @@ import sqlite3
 
 
 
-conn = sqlite3.connect("./Projects/cinema_ticket_booking/cinema.db")
+conn = sqlite3.connect("./cinema.db")
 cur = conn.cursor()
 
 
