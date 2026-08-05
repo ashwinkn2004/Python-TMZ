@@ -1,21 +1,12 @@
-import sqlite3
-import time
-
-conn = sqlite3.connect("./Projects/cinema_ticket_booking/cinema.db")
-cur = conn.cursor()
+from admin import adminMenu
+from user import userMenu
+from database_operations import createUserTable, checkUsername, userRegisterInDb, validateUser
 
 
 
-# Users table creation
+# User Table is created
 
-cur.execute('''
-    CREATE TABLE IF NOT EXISTS USERS(
-        user_id INTEGER PRIMARY KEY,
-        username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL,
-        role TEXT NOT NULL
-    )
-''')
+createUserTable()   # imported from database_operations.py
 
 
 
@@ -37,52 +28,18 @@ def mainMenu():
 
 
 
-# Admin menu
-
-def adminMenu():
-    print("1. Logout\n")
-    ch = int(input("Enter your choice : "))
-    if ch == 1:
-        print("\nLogging out...\n")
-        return time.sleep(1)
-
-
-
-
-# User menu
-
-def userMenu():
-    return
-
-
-
-# Checks whether the username already exists in db
-
-def checkUsername(username):
-    cur.execute('''
-        SELECT * FROM USERS WHERE username = ?
-    ''', (username,))
-    return cur.fetchone()
-
-
-
 # User registration based on roles
 
 def register():
     username = input("\nEnter username : ")
-    if checkUsername(username):
+    if checkUsername(username):                     # Checks whether the username already exists in db, imported from database_operations.py
         print("Username already exists!")
         return register()
 
     password = input("Enter password : ")
     role = input("Enter role (admin/user) : ")
 
-    cur.execute('''
-        INSERT INTO USERS(username, password, role)
-        VALUES(?, ?, ?)
-    ''', (username, password, role))
-
-    conn.commit()
+    userRegisterInDb(username, password, role)
 
 
 
@@ -92,11 +49,7 @@ def login():
     username = input("\nEnter username : ")
     password = input("Enter password : ")
 
-    cur.execute('''
-        SELECT * FROM USERS WHERE username = ? AND password = ?
-    ''', (username, password))
-
-    user = cur.fetchone()
+    user = validateUser(username, password)
 
     if user:
         print(f"\nLogin successfull\n Welcome {user[1]} ({user[3]})")
